@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.mapper.PermissionMapper" >
+    <select id="getById" resultMap="permissionMap">
+        SELECT * FROM sys_permission WHERE id=#{id}
+    </select>
+    <select id="selectPerssionMapByRoleId" resultMap="permissionMap">
+        SELECT  p1.* FROM sys_permission p1  LEFT JOIN sys_role_permission p2 ON p1.id = p2.permission_id
+        LEFT JOIN sys_role p3 ON p2.`role_id`=p3.`rid` WHERE
+            p3.`rid`=#{roleId}
+
+    </select>
+
+    <resultMap id="permissionMap" type="com.springboot.entity.Permission">
+        <id property="id" column="id"/>
+        <result property="available" column="available"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="parentIds" column="parent_ids"/>
+        <result property="permission" column="permission"/>
+        <result property="resource_type" column="resourceType"/>
+        <result property="url" column="url"/>
+    </resultMap>
+</mapper>
